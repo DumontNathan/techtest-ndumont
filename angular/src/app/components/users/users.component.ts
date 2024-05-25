@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { UsersListComponent } from '../users-list/users-list.component';
-import {WORDING} from "../../../assets/wording";
+import { WORDING } from '../../../assets/wording';
 import { Observable } from 'rxjs';
 import { User } from '../../http/users/users.model';
 import { CommonModule } from '@angular/common';
@@ -16,7 +22,7 @@ import { CommonModule } from '@angular/common';
     RouterLinkActive,
     MatButtonModule,
     UsersListComponent,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
@@ -24,5 +30,11 @@ import { CommonModule } from '@angular/common';
 })
 export class UsersComponent {
   @Input() allUsers$?: Observable<User[]>;
+  @Output() deleteUser: EventEmitter<User> = new EventEmitter();
+
+  onDeleteUser(user: User): void {
+    this.deleteUser.emit(user);
+  }
+
   protected readonly WORDING = WORDING;
 }

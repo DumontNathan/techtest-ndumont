@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { userResolver } from './resolvers/user.resolver';
+import { allUsersResolver, getUpdateUserByIdResolver } from './resolvers/user.resolver';
 
 export const routes: Routes = [
   {
@@ -8,7 +8,7 @@ export const routes: Routes = [
       import('./pages/users/users.component.page').then(
         (mod) => mod.UsersComponentPage
       ),
-    resolve: { allUsers$: userResolver },
+    resolve: { allUsers$: allUsersResolver },
   },
   {
     path: 'users/add',
@@ -16,6 +16,14 @@ export const routes: Routes = [
       import('./pages/add-user/add-user.component.page').then(
         (mod) => mod.AddUserComponentPage
       ),
+  },
+  {
+    path: 'users/:id/update',
+    loadComponent: () =>
+      import('./pages/update-user/update-user.component.page').then(
+        (mod) => mod.UpdateUserComponentPage 
+      ),
+      resolve: { updateUser$: getUpdateUserByIdResolver },
   },
   { path: '', redirectTo: '/users', pathMatch: 'full' },
 ];

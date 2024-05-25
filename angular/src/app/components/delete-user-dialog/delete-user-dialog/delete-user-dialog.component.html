@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Attention</h2>
+<mat-dialog-content>
+  <p>
+    Êtes-vous sûr de vouloir supprimer {{ user.firstName }}
+    {{ user.lastName }} (ID {{ user.id }}) ?
+  </p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button cdkFocusInitial (click)="onNoClick()">Non</button>
+  <button mat-button [mat-dialog-close]="user" color="warn" >Oui</button>
+</mat-dialog-actions>

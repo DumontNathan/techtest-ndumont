@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +28,7 @@ import { User } from '../../http/users/users.model';
   styleUrl: './add-user-form.component.css',
 })
 export class AddUserFormComponent {
+  @Input() updateUser?: User;
   @Output() userFormValue: EventEmitter<User> = new EventEmitter();
   userForm: FormGroup;
 
@@ -38,10 +39,37 @@ export class AddUserFormComponent {
     });
   }
 
+  ngOnInit() {
+    if (this.updateUser) {
+      this.userForm.setValue({
+        firstName: this.updateUser.firstName,
+        lastName: this.updateUser.lastName,
+      });
+    }
+  }
+
   submitUser(): void {
     if (this.userForm.valid) {
-      this.userFormValue.emit(this.userForm.value);
+      if (this.updateUser) {
+        this.userFormValue.emit({
+          ...this.userForm.value,
+          id: this.updateUser.id,
+        });
+      } else {
+        this.userFormValue.emit(this.userForm.value);
+      }
     }
+  }
+
+  isUpdateFormValid() {
+    if (
+      (this.userForm.value.lastName !== this.updateUser?.lastName ||
+        this.userForm.value.firstName !== this.updateUser?.firstName) &&
+      this.userForm.valid
+    )
+      return true;
+
+    return false;
   }
 
   protected readonly WORDING = WORDING;

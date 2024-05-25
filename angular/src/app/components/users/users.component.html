@@ -3,7 +3,7 @@
     <span class="users-list-title">{{ WORDING.usersListTitle }}</span>
   </div>
   <ng-container *ngIf="allUsers$ | async as allUsers">
-    <app-users-list [usersList]="allUsers"></app-users-list>
+    <app-users-list [usersList]="allUsers" (deleteUser)="onDeleteUser($event)"></app-users-list>
   </ng-container>
   <button
     routerLink="/users/add"

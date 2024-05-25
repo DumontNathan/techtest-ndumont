@@ -17,6 +17,10 @@ export class UsersFacade {
     return this.usersStore.allUsers$;
   }
 
+  get updateUser$(): Observable<User> {
+    return this.usersStore.updateUser$;
+  }
+
   fetchAllUsers$(): Observable<void> {
     return this.usersService.getAllUsers$().pipe(
       tap((allUsers: User[]) => {
@@ -26,9 +30,30 @@ export class UsersFacade {
     );
   }
 
+  fetchUpdateUserById$(id: number): Observable<void> {
+    return this.usersService.getUserById$(id).pipe(
+      tap((user: User) => {
+        this.usersStore.setUpdateUser(user);
+      }),
+      map((res) => res as unknown as void)
+    );
+  }
+
   createUser(userCreateInfos: User): Observable<void> {
     return this.usersService
       .createUser(userCreateInfos)
+      .pipe(map((res) => res as unknown as void));
+  }
+
+  updateUser(updateUserInfos: User): Observable<void> {
+    return this.usersService
+      .updateUser(updateUserInfos)
+      .pipe(map((res) => res as unknown as void));
+  }
+
+  deleteUser(userDeleteInfos: User): Observable<void> {
+    return this.usersService
+      .deleteUser(userDeleteInfos)
       .pipe(map((res) => res as unknown as void));
   }
 }

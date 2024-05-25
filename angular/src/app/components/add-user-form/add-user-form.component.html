@@ -11,6 +11,17 @@
     </mat-form-field>
 
     <div class="buttons-container">
+      @if (updateUser) {
+      <button
+        class="add-user-button"
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!isUpdateFormValid()"
+      >
+        {{ WORDING.updateUserFormButtonLabel }}
+      </button>
+      } @else {
       <button
         class="add-user-button"
         mat-raised-button
@@ -20,6 +31,8 @@
       >
         {{ WORDING.addUserFormButtonLabel }}
       </button>
+      }
+
       <button
         class="return-button"
         routerLink="/users"

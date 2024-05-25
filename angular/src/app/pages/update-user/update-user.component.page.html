@@ -1,0 +1,7 @@
+<ng-container *ngIf="updateUser$ | async as updateUser">
+  <app-add-user
+    [updateUser]="updateUser"
+    [showErrorMessage]="showErrorMessage"
+    (userFormValue)="onUpdateUser($event)"
+  ></app-add-user>
+</ng-container>
